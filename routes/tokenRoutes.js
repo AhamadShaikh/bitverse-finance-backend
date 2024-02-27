@@ -3,14 +3,11 @@ const router = express.Router();
 const Token = require("../model/tokenModel");
 
 router.get("/tokens", async (req, res) => {
-    const { page, limit } = req.query;
-    const pageNo = parseInt(page) || 1;
-    const limitNo = parseInt(limit) || 6;
-    const skipCount = (pageNo - 1) * limitNo;
-
     try {
-        const data = await Token.find({}).skip(skipCount).limit(limitNo);
-        console.log(data);
+        const { page, limit } = req.query;
+        if (!page)
+            page = 1
+        const data = await Token.find().skip((page - 1) * 17).limit(limit)
         res.status(200).json({ data: data });
     } catch (error) {
         console.log(error);
