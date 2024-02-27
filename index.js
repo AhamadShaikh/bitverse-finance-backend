@@ -5,8 +5,7 @@ const app = express()
 require("dotenv").config()
 const cors = require("cors")
 const router = express.Router()
-const Token = require("./model/tokenModel")
-
+const tokenRouter = require("./routes/tokenRoutes")
 
 app.use(express.json())
 
@@ -23,16 +22,7 @@ app.use(cors({
     origin: "*"
 }))
 
-router.get("/tokens", async (req, res) => {
-    try {
-        console.log('yes');
-        let data = await Token.find({})
-        res.status(200).json({ data: data })
-    } catch (error) {
-        console.log(error);
-        res.status(500).json('internal server error')
-    }
-})
+app.use("/api", tokenRouter)
 
 const PORT = process.env.PORT || 7000
 
