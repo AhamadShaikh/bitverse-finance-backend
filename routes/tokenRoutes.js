@@ -4,6 +4,7 @@ const Token = require("../model/tokenModel");
 
 router.get("/tokens", async (req, res) => {
     try {
+        // --- page and limit functionality
         const { page, limit } = req.query;
         if (!page)
             page = 1
